@@ -45,9 +45,10 @@ export function Labeling() {
     setSuccess(false);
     try {
       const response = await apiService.getRandomData({ datasetId: selectedDataset });
+      console.log(response)
       if (response.data) {
-        setCurrentData(response.data.data);
-        setDatasetInfo(response.data.dataset);
+        setCurrentData((response as any).data);
+        setDatasetInfo((response as any).dataset);
         setLabelValues({});
       }
     } catch (error) {
@@ -79,6 +80,10 @@ export function Labeling() {
     }
   };
 
+  // if(!loading && currentData && datasetInfo){
+    console.log("hi.....", loading , currentData ,datasetInfo)
+  // }
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <Card title={t.labeling.title}>
@@ -100,7 +105,7 @@ export function Labeling() {
           <Card title="Data to Label">
             <div className="space-y-4">
               <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                {Object.entries(currentData.row).map(([key, [value, type]]) => (
+                {Object.entries(currentData.row).map(([key, value]) => (
                   <div key={key} className="mb-3">
                     <span className="font-medium text-gray-700 dark:text-gray-300">
                       {key}:
@@ -109,7 +114,7 @@ export function Labeling() {
                       {String(value)}
                     </span>
                     <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
-                      ({type})
+                      {/* ({type}) */}
                     </span>
                   </div>
                 ))}
@@ -175,7 +180,7 @@ export function Labeling() {
         </>
       )}
 
-      {!loading && !currentData && selectedDataset && (
+      {!loading && !currentData && !selectedDataset && (
         <Card>
           <p className="text-center text-gray-500 dark:text-gray-400 py-8">
             {t.labeling.noData}

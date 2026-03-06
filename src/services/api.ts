@@ -3,7 +3,8 @@ import { ApiResponse, Dataset, Data, Feedback, PaginatedResponse } from '../type
 
 class ApiService {
   private getHeaders(): HeadersInit {
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    // const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc01hc3RlclJlYWxtVXNlciI6dHJ1ZSwidXNlcklkIjoiMTRjY2JmZjUtNmMxMS00NTBhLWIxODEtMTZlMGFiN2I0MzJmIiwiZW1haWwiOiJhZG1pbkBzYWFzLmNvbSIsInJlYWxtSWQiOiIwNmIzOGE1OC0zZmIzLTRhZDQtYTM4Zi1jM2E2ZDNlMDY2ZmYiLCJzZXNzaW9uSWQiOiJlYWZlMGFkMS1kODFkLTQxMDYtOGEyMy00MDRlYjBkMWVlNWUiLCJjbGllbnRJZEludGVybmFsIjoiZjUwZDlhMDUtYTUxNy00ZmM4LTgyMDgtZTE1MzY4NDkwZGIzIiwiaWF0IjoxNzcyNzYwNDY3LCJleHAiOjE3NzI3NjQwNjd9.SodUcmu_eUGoQbeN3sn06BGcYxQ9nGKwelao2kBt3ik"
     return {
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
@@ -57,7 +58,9 @@ class ApiService {
   }
 
   async uploadData(formData: FormData): Promise<ApiResponse<unknown>> {
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    // const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc01hc3RlclJlYWxtVXNlciI6dHJ1ZSwidXNlcklkIjoiMTRjY2JmZjUtNmMxMS00NTBhLWIxODEtMTZlMGFiN2I0MzJmIiwiZW1haWwiOiJhZG1pbkBzYWFzLmNvbSIsInJlYWxtSWQiOiIwNmIzOGE1OC0zZmIzLTRhZDQtYTM4Zi1jM2E2ZDNlMDY2ZmYiLCJzZXNzaW9uSWQiOiJlYWZlMGFkMS1kODFkLTQxMDYtOGEyMy00MDRlYjBkMWVlNWUiLCJjbGllbnRJZEludGVybmFsIjoiZjUwZDlhMDUtYTUxNy00ZmM4LTgyMDgtZTE1MzY4NDkwZGIzIiwiaWF0IjoxNzcyNzYwNDY3LCJleHAiOjE3NzI3NjQwNjd9.SodUcmu_eUGoQbeN3sn06BGcYxQ9nGKwelao2kBt3ik"
+
     const response = await fetch(`${API_BASE_URL}/api/data/upload`, {
       method: 'POST',
       headers: {
