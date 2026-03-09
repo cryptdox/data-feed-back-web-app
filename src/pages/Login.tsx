@@ -6,8 +6,14 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { AUTH_API_URL, AUTH_CONFIG, EXTERNAL_URLS } from '../constants';
 import { Rocket, AlertCircle } from 'lucide-react';
+import { Signup } from './Signup';
 
-export function Login() {
+interface LoginProps {
+  showSignup?: boolean;
+}
+
+export function Login({ showSignup: initialShowSignup = false }: LoginProps) {
+  const [showSignup, setShowSignup] = useState(initialShowSignup);
   const { login } = useAuth();
   const { theme } = useTheme();
   const [email, setEmail] = useState('');
@@ -60,6 +66,10 @@ export function Login() {
       setLoading(false);
     }
   };
+
+  if (showSignup) {
+    return <Signup onSwitchToLogin={() => setShowSignup(false)} />;
+  }
 
   return (
     <div
@@ -136,7 +146,7 @@ export function Login() {
             </button>
 
             <button
-              onClick={() => window.open(EXTERNAL_URLS.SIGNUP, '_blank')}
+              onClick={() => setShowSignup(true)}
               className="w-full px-4 py-2 text-sm font-medium text-space-green hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
             >
               Create New Account
