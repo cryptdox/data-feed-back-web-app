@@ -52,6 +52,9 @@ export interface User {
   email: string;
   realmId: string;
   sessionId: string;
+  name?: string;
+  isEmailVerified?: boolean;
+  isMasterRealmUser?: boolean;
 }
 
 export type Theme = 'light' | 'dark';

@@ -1,25 +1,36 @@
-import { Moon, Sun, Globe, Rocket } from 'lucide-react';
+import { Moon, Sun, Globe, Rocket, LogOut } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const { logout, user } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#00a8ff] to-[#9c88ff] rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-space-blue to-space-purple rounded-lg flex items-center justify-center">
               <Rocket className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-[#00a8ff] to-[#9c88ff] bg-clip-text text-transparent">
-              DataLabel Space
-            </span>
+            <div>
+              <span className="block text-lg font-bold bg-gradient-to-r from-space-blue to-space-purple bg-clip-text text-transparent">
+                DataHub
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {user?.email}
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <button
               onClick={() => setLanguage(language === 'en' ? 'bn' : 'en')}
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -38,6 +49,14 @@ export function Navbar() {
               ) : (
                 <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
               )}
+            </button>
+
+            <button
+              onClick={handleLogout}
+              className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+              title="Logout"
+            >
+              <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
             </button>
           </div>
         </div>

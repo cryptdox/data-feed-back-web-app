@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 import { MainLayout } from './layouts/MainLayout';
+import { Login } from './pages/Login';
 import { Home } from './pages/Home';
 import { Datasets } from './pages/Datasets';
 import { CreateDataset } from './pages/CreateDataset';
@@ -10,9 +12,19 @@ import { UploadData } from './pages/UploadData';
 import { Labeling } from './pages/Labeling';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
+import { Loading } from './components/Loading';
 
-function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState('home');
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
+
+  if (!isAuthenticated) {
+    return <Login />;
+  }
 
   const renderPage = () => {
     switch (currentPage) {
@@ -36,12 +48,18 @@ function App() {
   };
 
   return (
+    <MainLayout currentPage={currentPage} onNavigate={setCurrentPage}>
+      {renderPage()}
+    </MainLayout>
+  );
+}
+
+function App() {
+  return (
     <ThemeProvider>
       <LanguageProvider>
         <AuthProvider>
-          <MainLayout currentPage={currentPage} onNavigate={setCurrentPage}>
-            {renderPage()}
-          </MainLayout>
+          <AppContent />
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
