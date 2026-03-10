@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { User } from '../types';
 import { STORAGE_KEYS, AUTH_API_URL, AUTH_CONFIG } from '../constants';
+import { useInactivityLogout } from './InactivityLogout';
 
 interface AuthContextType {
   user: User | null;
@@ -16,6 +17,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const refreshTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [token, setToken] = useState<string | null>(() => {
     return localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
   });
@@ -27,6 +29,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (token) {
+      if (isTokenExpired(token)) {
+        refreshAccessToken();
+        return;
+      }
+  
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
         setUser({
@@ -38,11 +45,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           isEmailVerified: payload.isEmailVerified,
           isMasterRealmUser: payload.isMasterRealmUser,
         });
-      } catch (e) {
-        console.error('Invalid token', e);
+      } catch {
         logout();
       }
     }
+  
     setLoading(false);
   }, [token]);
 
@@ -63,8 +70,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const data = await response.json();
       if (data.success && data.data?.accessToken) {
-        setToken(data.data.accessToken);
-        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.data.accessToken);
+        const newToken = data.data.accessToken;
+      
+        setToken(newToken);
+        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, newToken);
+      
+        scheduleTokenRefresh(newToken);
+      
         return true;
       }
 
@@ -78,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = (newToken: string, newRefreshToken: string, newUser: User) => {
+    scheduleTokenRefresh(newToken)
     setToken(newToken);
     setRefreshToken(newRefreshToken);
     setUser(newUser);
@@ -91,7 +104,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+    window.location.href = "/login";
   };
+
+  function isTokenExpired(token: string) {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 < Date.now();
+    } catch {
+      return true;
+    }
+  }
+
+  useEffect(() => {
+    const handler = (event: StorageEvent) => {
+      if (event.key === STORAGE_KEYS.AUTH_TOKEN && !event.newValue) {
+        logout();
+      }
+    };
+  
+    window.addEventListener("storage", handler);
+  
+    return () => window.removeEventListener("storage", handler);
+  }, []);
+
+  function scheduleTokenRefresh(token: string) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expiresAt = payload.exp * 1000;
+  
+    const timeout = expiresAt - Date.now() - 60000;
+  
+    if (refreshTimer.current) {
+      clearTimeout(refreshTimer.current);
+    }
+  
+    if (timeout > 0) {
+      refreshTimer.current = setTimeout(() => {
+        refreshAccessToken();
+      }, timeout);
+    }
+  }
+
+  useEffect(() => {
+    if (token && isTokenExpired(token)) {
+      refreshAccessToken();
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -101,7 +159,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         refreshToken,
         login,
         logout,
-        isAuthenticated: !!token,
+        isAuthenticated: !!token && !isTokenExpired(token),
         loading,
         refreshAccessToken,
       }}

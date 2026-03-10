@@ -54,20 +54,20 @@ export function Signup({ onSwitchToLogin }: SignupProps) {
       return false;
     }
 
-    if (!/[A-Z]/.test(password)) {
-      setError('Password must contain at least one uppercase letter');
-      return false;
-    }
+    // if (!/[A-Z]/.test(password)) {
+    //   setError('Password must contain at least one uppercase letter');
+    //   return false;
+    // }
 
     if (!/[0-9]/.test(password)) {
       setError('Password must contain at least one number');
       return false;
     }
 
-    if (!/[!@#$%^&*]/.test(password)) {
-      setError('Password must contain at least one special character (!@#$%^&*)');
-      return false;
-    }
+    // if (!/[!@#$%^&*]/.test(password)) {
+    //   setError('Password must contain at least one special character (!@#$%^&*)');
+    //   return false;
+    // }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -107,23 +107,24 @@ export function Signup({ onSwitchToLogin }: SignupProps) {
         return;
       }
 
-      if (data.data?.accessToken && data.data?.refreshToken && data.data?.user) {
+      if (data.data?.id && data.data?.email && data.data?.name) {
         setSuccess(true);
-        setTimeout(() => {
-          login(
-            data.data.accessToken,
-            data.data.refreshToken,
-            {
-              userId: data.data.user.userId,
-              email: data.data.user.email,
-              name: data.data.user.name,
-              isEmailVerified: data.data.user.isEmailVerified,
-              isMasterRealmUser: data.data.user.isMasterRealmUser,
-              realmId: AUTH_CONFIG.REALM_ID,
-              sessionId: '',
-            }
-          );
-        }, 1500);
+        onSwitchToLogin()
+        // setTimeout(() => {
+        //   login(
+        //     data.data.accessToken,
+        //     data.data.refreshToken,
+        //     {
+        //       userId: data.data.user.userId,
+        //       email: data.data.user.email,
+        //       name: data.data.user.name,
+        //       isEmailVerified: data.data.user.isEmailVerified,
+        //       isMasterRealmUser: data.data.user.isMasterRealmUser,
+        //       realmId: AUTH_CONFIG.REALM_ID,
+        //       sessionId: '',
+        //     }
+        //   );
+        // }, 1500);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');

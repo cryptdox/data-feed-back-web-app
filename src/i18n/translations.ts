@@ -3,6 +3,7 @@ export const translations = {
     nav: {
       home: 'Home',
       datasets: 'Datasets',
+      upload: 'Upload',
       labeling: 'Labeling',
       analytics: 'Analytics',
       settings: 'Settings',
@@ -62,6 +63,7 @@ export const translations = {
     nav: {
       home: 'হোম',
       datasets: 'ডেটাসেট',
+      upload: 'আপলোড',
       labeling: 'লেবেলিং',
       analytics: 'বিশ্লেষণ',
       settings: 'সেটিংস',

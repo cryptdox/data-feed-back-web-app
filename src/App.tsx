@@ -13,8 +13,10 @@ import { Labeling } from './pages/Labeling';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
 import { Loading } from './components/Loading';
+import { useInactivityLogout } from './contexts/InactivityLogout';
 
 function AppContent() {
+  useInactivityLogout();
   const [currentPage, setCurrentPage] = useState('home');
   const { isAuthenticated, loading } = useAuth();
 

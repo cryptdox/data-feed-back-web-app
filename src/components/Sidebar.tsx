@@ -12,6 +12,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
   const menuItems = [
     { id: 'home', label: t.nav.home, icon: Home },
     { id: 'datasets', label: t.nav.datasets, icon: Database },
+    { id: 'upload', label: t.nav.upload, icon: Upload },
     { id: 'labeling', label: t.nav.labeling, icon: Tag },
     { id: 'analytics', label: t.nav.analytics, icon: BarChart3 },
     { id: 'settings', label: t.nav.settings, icon: Settings },
