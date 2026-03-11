@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { User } from '../types';
 import { STORAGE_KEYS, AUTH_API_URL } from '../constants';
+import { apiService } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
@@ -8,6 +9,7 @@ interface AuthContextType {
   refreshToken: string | null;
   login: (token: string, refreshToken: string, user: User) => void;
   logout: () => void;
+  handleLogout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
   refreshAccessToken: () => Promise<boolean>;
@@ -103,6 +105,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await apiService.handleLogout();
+      if (!response.success) {
+        alert(response.message || 'Logout failed');
+        return;
+      }
+      logout();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'An error occurred');
+    }
+  };
+
   const logout = () => {
     setToken(null);
     setRefreshToken(null);
@@ -163,6 +178,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         refreshToken,
         login,
         logout,
+        handleLogout,
         isAuthenticated: !!token && !isTokenExpired(token),
         loading,
         refreshAccessToken,

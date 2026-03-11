@@ -1,4 +1,4 @@
-import { API_BASE_URL, STORAGE_KEYS } from '../constants';
+import { API_BASE_URL, AUTH_API_URL, STORAGE_KEYS } from '../constants';
 import { ApiResponse, Dataset, Data, Feedback, PaginatedResponse } from '../types';
 
 class ApiService {
@@ -40,10 +40,31 @@ class ApiService {
     }
   }
 
+  async handleLogout (retry:boolean = true): Promise<any> {
+    try {
+      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) as string;
+      let response = await fetch(`${AUTH_API_URL}/api/auth/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      });
+      response = await response.json();
+      if (response.status === 401 && retry) {
+        const refreshed = await this.refreshAccessToken();
+        if (refreshed) {
+          this.handleLogout(false);
+        }
+        throw new Error("Session expired");
+      }
+      return response
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'An error occurred');
+      return {}
+    }
+  };
+
   private logout() {
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-    window.location.href = "/login";
   }
 
   private async request<T>(

@@ -2,7 +2,6 @@ import { Moon, Sun, Globe, Rocket, LogOut, Menu } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { AUTH_API_URL, STORAGE_KEYS } from '../constants';
 
 interface NavbarProps {
   onToggleSidebar?: () => void;
@@ -11,28 +10,7 @@ interface NavbarProps {
 export function Navbar({ onToggleSidebar }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
-  const { logout, user } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) as string;
-      const response = await fetch(`${AUTH_API_URL}/api/auth/logout`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        alert(data.message || 'Logout failed');
-        return;
-      }
-      logout();
-      alert(data.message);
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'An error occurred');
-    }
-  };
+  const { user, handleLogout } = useAuth();
 
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">

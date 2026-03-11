@@ -5,7 +5,7 @@ import { STORAGE_KEYS } from "../constants";
 const INACTIVITY_TIME = 15 * 60 * 1000; // 15 min
 
 export function useInactivityLogout() {
-  const { logout } = useAuth();
+  const { handleLogout } = useAuth();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateLastActivity = () => {
@@ -21,7 +21,7 @@ export function useInactivityLogout() {
       const lastActivity = Number(localStorage.getItem(STORAGE_KEYS.LAST_ACTIVITY));
 
       if (Date.now() - lastActivity >= INACTIVITY_TIME) {
-        logout();
+        handleLogout();
       }
     }, INACTIVITY_TIME);
   };
