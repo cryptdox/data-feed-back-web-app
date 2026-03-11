@@ -13,6 +13,14 @@ import { BarChart3, Database, Server, Search } from 'lucide-react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
+
+const formatLocal = (d: Date) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
 export function Analytics() {
 
   const today = new Date();
@@ -25,8 +33,8 @@ export function Analytics() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   // filters
   const [datasetId, setDatasetId] = useState('');
-  const [startDate, setStartDate] = useState(format(firstDay));
-  const [endDate, setEndDate] = useState(format(today));
+  const [startDate, setStartDate] = useState(formatLocal(firstDay));
+  const [endDate, setEndDate] = useState(formatLocal(today));
 
   // dataset dropdown
   const [datasets, setDatasets] = useState<Dataset[]>([]);
@@ -40,6 +48,7 @@ export function Analytics() {
   const [datasetStats, setDatasetStats] = useState<DatasetStatsItem[]>([]);
 
   let debounceTimer: any;
+
 
   const loadDatasets = (query?: string) => {
 
@@ -301,7 +310,7 @@ export function Analytics() {
             <input
               type="date"
               value={startDate}
-              max={format(today)}
+              max={formatLocal(today)}
               onChange={(e) => handleStartDate(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
@@ -321,7 +330,7 @@ export function Analytics() {
               type="date"
               value={endDate}
               min={startDate}
-              max={format(today)}
+              max={formatLocal(today)}
               onChange={(e) => handleEndDate(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
