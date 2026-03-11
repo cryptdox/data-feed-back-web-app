@@ -1,3 +1,52 @@
+export interface Package {
+  packageId: string;
+  name: string;
+  plan: {
+    period: string;           // e.g., "monthly"
+    storageMB: number;        // e.g., 500
+    datasetsMax: number;      // e.g., 30
+    privateDataset: boolean;  // true/false
+    dailyFeedbackMax: number; // e.g., 500
+  };
+  createdAt: string; // ISO date string
+}
+
+export enum UserPackageStatus {
+  PENDING = 'PENDING',
+  ACTIVE = 'ACTIVE',
+  EXPIRED = 'EXPIRED',
+  CANCELLED = 'CANCELLED',
+}
+
+export interface UserPackageLog {
+  userPackageLogId: string;
+  userPackageUserAccessId: string;
+  logs: {
+    datasetsCreated: number;
+    storageUsedMB: number;
+    feedbackToday: number;
+    privateDatasetCount: number;
+  };
+  logsType: 'BILL' | 'USAGE';
+  createdAt: string;
+}
+
+export interface UserPackage {
+  userAccessId: string;
+  userId: string;
+  packagePackageId: string;
+  package: Package;
+  status: UserPackageStatus;
+  currentState: {
+    datasetsCreated: number;
+    storageUsedMB: number;
+    feedbackToday: number;
+    privateDatasetCount: number;
+  };
+  createdAt: string;
+  updatedAt?: string;
+  userPackageLogs: UserPackageLog[];
+}
 export interface Dataset {
   datasetId: string;
   name: string;
@@ -31,6 +80,26 @@ export interface FeedbackLog {
   value: Record<string, number>;
   createdBy: string;
   createdAt: string;
+}
+export interface UserAnalytics {
+  totalDatasets: number
+  totalDataRows: number
+  totalFeedbacks: number
+  totalStorageMB: number
+}
+
+export interface FeedbackTrendItem {
+  date: string
+  count: number
+}
+
+export interface DatasetStatsItem {
+  datasetId: string
+  datasetName: string
+  totalRows: number
+  labeledRows: number
+  labelCoverage: number
+  createdAt: string
 }
 
 export interface ApiResponse<T = unknown> {

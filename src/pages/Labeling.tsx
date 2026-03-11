@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { Select } from '../components/Select';
 import { Loading } from '../components/Loading';
 import { useLanguage } from '../contexts/LanguageContext';
 import { apiService } from '../services/api';
@@ -88,54 +87,70 @@ export function Labeling() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <Card title={t.labeling.title}>
-        <div className="grid gap-4 md:grid-cols-3 grid-cols-1">
-          <Select
-            label="Select Dataset"
-            value={selectedDataset}
-            onChange={(e) => setSelectedDataset(e.target.value)}
-            options={[
-              { value: '', label: '-- Select Dataset --' },
-              ...datasets.map(ds => ({ value: ds.datasetId, label: ds.name })),
-            ]}
-          />
+        <div className="grid gap-6 md:grid-cols-3 grid-cols-1">
+          {/* Dataset Select */}
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Select Dataset
+            </label>
+            <select
+              value={selectedDataset}
+              onChange={(e) => setSelectedDataset(e.target.value)}
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+            >
+              <option value="">-- Select Dataset --</option>
+              {datasets.map((ds) => (
+                <option key={ds.datasetId} value={ds.datasetId}>
+                  {ds.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <Select
-            label="Count (optional)"
-            value={count === '' ? '' : count}
-            onChange={(e) => {
-              const val = e.target.value;
-              setCount(val === '' ? '' : Number(val));
-            }}
-            options={[
-              { value: '', label: '-- No Count Filter --' },
-              { value: '1', label: '1' },
-              { value: '2', label: '2' },
-              { value: '3', label: '3' },
-              { value: '5', label: '5' },
-              { value: '10', label: '10' },
-            ]}
-          />
+          {/* Count Select */}
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Count (optional)
+            </label>
+            <select
+              value={count === '' ? '' : count}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCount(val === '' ? '' : Number(val));
+              }}
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+            >
+              <option value="">-- No Count Filter --</option>
+              {[1, 2, 3, 5, 10].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+          {/* Offset Input */}
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Offset (optional)
             </label>
             <input
               type="number"
-              className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
+              min={0}
               value={offset}
               onChange={(e) => setOffset(Number(e.target.value))}
-              min={0}
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+              placeholder="0"
             />
           </div>
         </div>
       </Card>
 
-      (selectedDataset && <Card title="Dataset description">
+      (selectedDataset && (<Card title="Dataset description">
         <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
           <p>{datasets.filter(ds => ds?.datasetId == selectedDataset)[0]?.description}</p>
         </div>
-      </Card>
+      </Card>)
       )
 
       {loading && <Loading message="Loading data..." />}

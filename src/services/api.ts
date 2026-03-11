@@ -1,5 +1,5 @@
 import { API_BASE_URL, AUTH_API_URL, STORAGE_KEYS } from '../constants';
-import { ApiResponse, Dataset, Data, Feedback, PaginatedResponse } from '../types';
+import { ApiResponse, Dataset, Data, Feedback, PaginatedResponse, UserPackage, FeedbackLog, FeedbackTrendItem, DatasetStatsItem, UserAnalytics } from '../types';
 
 class ApiService {
 
@@ -14,6 +14,7 @@ class ApiService {
 
   private async refreshAccessToken(): Promise<boolean> {
     const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+    console.log("refreshToken: ", refreshToken)
 
     if (!refreshToken) return false;
 
@@ -40,7 +41,7 @@ class ApiService {
     }
   }
 
-  async handleLogout (retry:boolean = true): Promise<any> {
+  async handleLogout(retry: boolean = true): Promise<any> {
     try {
       const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) as string;
       let response = await fetch(`${AUTH_API_URL}/api/auth/logout`, {
@@ -191,6 +192,51 @@ class ApiService {
     });
   }
 
+  /**
+ * Dashboard analytics summary
+ */
+  async getUserAnalytics(): Promise<ApiResponse<UserAnalytics>> {
+
+    return this.request<UserAnalytics>(
+      "/api/data/analytics/me"
+    );
+  }
+
+  /**
+   * Feedback trend chart data
+   */
+  async getFeedbackTrend(params?: {
+    datasetId?: string
+    startDate?: string
+    endDate?: string
+  }): Promise<ApiResponse<FeedbackTrendItem[]>> {
+
+    const query = new URLSearchParams(
+      Object.entries(params || {}).map(([k, v]) => [k, String(v)])
+    );
+
+    return this.request<FeedbackTrendItem[]>(
+      `/api/data/analytics/feedback-trend?${query}`
+    );
+  }
+
+  /**
+   * Dataset statistics table
+   */
+  async getDatasetStats(params?: {
+    offset?: number
+    limit?: number
+  }): Promise<ApiResponse<PaginatedResponse<DatasetStatsItem>>> {
+
+    const query = new URLSearchParams(
+      Object.entries(params || {}).map(([k, v]) => [k, String(v)])
+    );
+
+    return this.request<PaginatedResponse<DatasetStatsItem>>(
+      `/api/data/analytics/dataset-stats?${query}`
+    );
+  }
+
   async listFeedback(params?: {
     offset?: number;
     limit?: number;
@@ -207,6 +253,16 @@ class ApiService {
 
   async getFeedback(feedbackId: string): Promise<ApiResponse<Feedback>> {
     return this.request<Feedback>(`/api/feedback/${feedbackId}`);
+  }
+
+  async listUserPackages(params?: { offset?: number; limit?: number }): Promise<ApiResponse<PaginatedResponse<UserPackage>>> {
+    const query = new URLSearchParams(Object.entries(params || {}).map(([k, v]) => [k, String(v)]));
+    return this.request<PaginatedResponse<UserPackage>>(`/api/user-package?${query}`);
+  }
+
+  async listFeedbackLogs(params?: { offset?: number; limit?: number; datasetId?: string }): Promise<ApiResponse<PaginatedResponse<FeedbackLog>>> {
+    const query = new URLSearchParams(Object.entries(params || {}).map(([k, v]) => [k, String(v)]));
+    return this.request<PaginatedResponse<FeedbackLog>>(`/api/feedback-log?${query}`);
   }
 }
 
