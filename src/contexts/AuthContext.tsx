@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { User } from '../types';
-import { STORAGE_KEYS, AUTH_API_URL, AUTH_CONFIG } from '../constants';
-import { useInactivityLogout } from './InactivityLogout';
+import { STORAGE_KEYS, AUTH_API_URL } from '../constants';
 
 interface AuthContextType {
   user: User | null;
@@ -41,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: payload.email,
           realmId: payload.realmId,
           sessionId: payload.sessionId,
-          name: payload.name,
+          name: payload.name ?? payload.email.split('@')[0],
           isEmailVerified: payload.isEmailVerified,
           isMasterRealmUser: payload.isMasterRealmUser,
         });
@@ -54,7 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [token]);
 
   const refreshAccessToken = async (): Promise<boolean> => {
-    if (!refreshToken) return false;
+    if (!refreshToken) {
+      logout();
+      return false;
+    }
 
     try {
       const response = await fetch(`${AUTH_API_URL}/api/auth/refresh`, {
@@ -69,11 +71,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json();
-      if (data.success && data.data?.accessToken) {
+      if (data.success && data.data?.accessToken && data.data?.refreshToken) {
         const newToken = data.data.accessToken;
+        const refreshToken = data.data?.refreshToken;
       
         setToken(newToken);
+        setRefreshToken(refreshToken)
         localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, newToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
       
         scheduleTokenRefresh(newToken);
       
@@ -104,7 +109,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-    window.location.href = "/login";
   };
 
   function isTokenExpired(token: string) {

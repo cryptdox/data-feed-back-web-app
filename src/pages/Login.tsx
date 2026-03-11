@@ -31,7 +31,7 @@ export function Login({ showSignup: initialShowSignup = false }: LoginProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          realmId: AUTH_CONFIG.REALM_ID,
+          realmName: AUTH_CONFIG.REALM_NAME,
           clientId: AUTH_CONFIG.CLIENT_ID,
           email,
           password,
@@ -55,7 +55,7 @@ export function Login({ showSignup: initialShowSignup = false }: LoginProps) {
             name: data.data.user.name,
             isEmailVerified: data.data.user.isEmailVerified,
             isMasterRealmUser: data.data.user.isMasterRealmUser,
-            realmId: AUTH_CONFIG.REALM_ID,
+            realmId: data.data?.user.realmId,
             sessionId: '',
           }
         );

@@ -1,5 +1,5 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-export const AUTH_API_URL = 'https://crypt-iam-latest.onrender.com';
+export const API_BASE_URL = import.meta.env.VITE_API_URL as string
+export const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL as string
 
 export const ROUTES = {
   LOGIN: '/login',
@@ -18,15 +18,15 @@ export const STORAGE_KEYS = {
   LANGUAGE: 'app-language',
   AUTH_TOKEN: 'auth-token',
   REFRESH_TOKEN: 'refresh-token',
+  LAST_ACTIVITY: 'last-activity'
 } as const;
 
 export const AUTH_CONFIG = {
-  REALM_ID: '22e5e8cb-a606-4a64-8ef5-7fb49f8c4787',
-  CLIENT_ID: 'data-feedback-client',
+  REALM_NAME: import.meta.env.VITE_REALM_NAME,
+  CLIENT_ID: import.meta.env.VITE_CLIENT_ID,
 } as const;
 
 export const EXTERNAL_URLS = {
-  SIGNUP: 'https://crypt-iam-latest.onrender.com/signup',
   FORGOT_PASSWORD: 'https://crypt-iam-latest.onrender.com/forgot-password',
   CHANGE_PASSWORD: 'https://crypt-iam-latest.onrender.com/change-password',
 } as const;

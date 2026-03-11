@@ -95,7 +95,7 @@ export function Signup({ onSwitchToLogin }: SignupProps) {
           name: name.trim(),
           email: email.toLowerCase().trim(),
           password,
-          realmId: AUTH_CONFIG.REALM_ID,
+          realmName: AUTH_CONFIG.REALM_NAME,
           clientId: AUTH_CONFIG.CLIENT_ID,
         }),
       });
@@ -120,7 +120,7 @@ export function Signup({ onSwitchToLogin }: SignupProps) {
         //       name: data.data.user.name,
         //       isEmailVerified: data.data.user.isEmailVerified,
         //       isMasterRealmUser: data.data.user.isMasterRealmUser,
-        //       realmId: AUTH_CONFIG.REALM_ID,
+        //       realmId: AUTH_CONFIG.REALM_NAME,
         //       sessionId: '',
         //     }
         //   );

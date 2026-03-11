@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useAuth } from "./AuthContext";
+import { STORAGE_KEYS } from "../constants";
 
 const INACTIVITY_TIME = 15 * 60 * 1000; // 15 min
 
@@ -8,7 +9,7 @@ export function useInactivityLogout() {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateLastActivity = () => {
-    localStorage.setItem("lastActivity", Date.now().toString());
+    localStorage.setItem(STORAGE_KEYS.LAST_ACTIVITY, Date.now().toString());
   };
 
   const resetTimer = () => {
@@ -17,7 +18,7 @@ export function useInactivityLogout() {
     if (timer.current) clearTimeout(timer.current);
 
     timer.current = setTimeout(() => {
-      const lastActivity = Number(localStorage.getItem("lastActivity"));
+      const lastActivity = Number(localStorage.getItem(STORAGE_KEYS.LAST_ACTIVITY));
 
       if (Date.now() - lastActivity >= INACTIVITY_TIME) {
         logout();
@@ -29,7 +30,7 @@ export function useInactivityLogout() {
     const events = ["mousemove", "keydown", "scroll", "click"];
 
     const storageHandler = (e: StorageEvent) => {
-      if (e.key === "lastActivity") {
+      if (e.key === STORAGE_KEYS.LAST_ACTIVITY) {
         resetTimer();
       }
     };
