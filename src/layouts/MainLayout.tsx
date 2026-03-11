@@ -28,16 +28,19 @@ export function MainLayout({ children, currentPage, onNavigate }: MainLayoutProp
 
         {/* Sidebar overlay for small screens */}
         {sidebarOpen && (
-          <div className="fixed inset-0 z-40 md:hidden">
-            <div
-              className="fixed inset-0 bg-black opacity-50"
-              onClick={() => setSidebarOpen(false)}
-            />
-            <div className="relative w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full p-4 z-50">
-              <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
-            </div>
-          </div>
-        )}
+  <div className="fixed inset-0 z-40 md:hidden">
+    {/* dark overlay */}
+    <div
+      className="fixed inset-0 bg-black opacity-50"
+      onClick={() => setSidebarOpen(false)}
+    />
+
+    {/* sidebar container */}
+    <div className="relative w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full p-4 pt-16 z-50 overflow-y-auto overflow-x-hidden scrollbar-none">
+  <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
+</div>
+  </div>
+)}
 
         {/* Main content */}
         <main className="flex-1 p-4 md:p-8">{children}</main>
