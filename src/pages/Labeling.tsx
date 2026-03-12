@@ -16,7 +16,7 @@ export function Labeling() {
   const [showPicker, setShowPicker] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
-  const [count, setCount] = useState<number | ''>('');
+  const [count, setCount] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
   const [currentData, setCurrentData] = useState<Data | null>(null);
   const [datasetInfo, setDatasetInfo] = useState<Dataset | null>(null);
@@ -69,7 +69,7 @@ export function Labeling() {
     try {
       const res = await apiService.getRandomData({
         datasetId: selectedDataset,
-        count: count !== '' ? count : 0,
+        count: count ?? 0,
         offset,
       });
       if (res.data) {
@@ -167,32 +167,74 @@ export function Labeling() {
           </div>
 
           {/* Count */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <label className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Count (optional)
             </label>
-            <select
-              value={count === '' ? '' : count}
-              onChange={(e) => setCount(e.target.value === '' ? '' : Number(e.target.value))}
-              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-            >
-              <option value="">-- No Count Filter --</option>
-              {[1, 2, 3, 5, 10].map(n => <option key={n} value={n}>{n}</option>)}
-            </select>
-          </div>
+            <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden w-32">
+              {/* Decrement */}
+              <button
+                type="button"
+                onClick={() => setCount(prev => (prev && prev > 0 ? prev - 1 : 0))}
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              >
+                -
+              </button>
 
+              {/* Input */}
+              <input
+                type="number"
+                min={0}
+                value={count}
+                onChange={(e) => setCount(Number(e.target.value))}
+                className="w-16 text-center bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none
+                [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+                [&::-moz-appearance]:textfield"                 />
+
+              {/* Increment */}
+              <button
+                type="button"
+                onClick={() => setCount(prev => (prev ? prev + 1 : 1))}
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              >
+                +
+              </button>
+            </div>
+          </div>
           {/* Offset */}
           <div className="flex flex-col">
             <label className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Offset (optional)
             </label>
-            <input
-              type="number"
-              min={0}
-              value={offset}
-              onChange={(e) => setOffset(Number(e.target.value))}
-              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
-            />
+            <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden w-32">
+              {/* Decrement */}
+              <button
+                type="button"
+                onClick={() => setOffset(prev => (prev && prev > 0 ? prev - 1 : 0))}
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              >
+                -
+              </button>
+
+              {/* Input */}
+              <input
+                type="number"
+                min={0}
+                value={offset}
+                onChange={(e) => setOffset(Number(e.target.value))}
+                className="w-16 text-center bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none
+                [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+                [&::-moz-appearance]:textfield"              />
+
+              {/* Increment */}
+              <button
+                type="button"
+                onClick={() => setOffset(prev => (prev ? prev + 1 : 1))}
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              >
+                +
+              </button>
+            </div>
           </div>
 
         </div>

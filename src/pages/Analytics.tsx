@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react'
+import { Database as DsIcon, ListChecks, CheckCircle, PieChart, Calendar } from 'lucide-react';
 import { Card } from '../components/Card';
 import { Loading } from '../components/Loading';
 import { apiService } from '../services/api';
@@ -351,58 +352,49 @@ export function Analytics() {
       </Card>
 
 
-      {/* Dataset Stats */}
-
-      <Card title="Dataset Stats">
-
+      {/* Dataset Stats */}<Card title="Dataset Stats">
         <div className="overflow-x-auto">
-
-          <table className="w-full table-auto border-collapse border border-gray-200">
+          <table className="w-full table-auto border-collapse border border-gray-200 min-w-max">
 
             <thead>
-
-              <tr className="bg-gray-100">
-
-                <th className="px-4 py-2 text-left">Dataset</th>
-                <th className="px-4 py-2">Rows</th>
-                <th className="px-4 py-2">Labeled Rows</th>
-                <th className="px-4 py-2">Label Coverage</th>
-                <th className="px-4 py-2">Created At</th>
-
+              <tr className="bg-gray-100 dark:bg-gray-700">
+                <th className="px-4 py-2 text-left" title="Dataset">
+                  <DsIcon className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Dataset</span>
+                </th>
+                <th className="px-4 py-2 text-center" title="Rows">
+                  <ListChecks className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Rows </span>
+                </th>
+                <th className="px-4 py-2 text-center" title="Labeled">
+                  <CheckCircle className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Labeled </span>
+                </th>
+                <th className="px-4 py-2 text-center" title="Coverage">
+                  <PieChart className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Coverage </span>
+                </th>
+                <th className="px-4 py-2 text-center" title="Created">
+                  <Calendar className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
+                  <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Created </span>
+                </th>
               </tr>
-
             </thead>
-
             <tbody>
-
               {datasetStats.map(ds => (
-
                 <tr key={ds.datasetId} className="border-b">
-
-                  <td className="px-4 py-2">{ds.datasetName}</td>
-
-                  <td className="px-4 py-2 text-center">{ds.totalRows}</td>
-
-                  <td className="px-4 py-2 text-center">{ds.labeledRows}</td>
-
-                  <td className="px-4 py-2 text-center">
-                    {ds.labelCoverage}%
-                  </td>
-
-                  <td className="px-4 py-2 text-center">
+                  <td className="px-4 py-2 whitespace-nowrap">{ds.datasetName}</td>
+                  <td className="px-4 py-2 text-center whitespace-nowrap">{ds.totalRows}</td>
+                  <td className="px-4 py-2 text-center whitespace-nowrap">{ds.labeledRows}</td>
+                  <td className="px-4 py-2 text-center whitespace-nowrap">{ds.labelCoverage}%</td>
+                  <td className="px-4 py-2 text-center whitespace-nowrap">
                     {new Date(ds.createdAt).toLocaleDateString()}
                   </td>
-
                 </tr>
-
               ))}
-
             </tbody>
-
           </table>
-
         </div>
-
       </Card>
 
     </div>
