@@ -358,23 +358,23 @@ export function Analytics() {
 
             <thead>
               <tr className="bg-gray-100 dark:bg-gray-700">
-                <th className="px-2 py-2 text-left" title="Dataset">
+                <th className="px-1 py-2 text-left" title="Dataset">
                   <DsIcon className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
                   <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Dataset</span>
                 </th>
-                <th className="px-2 py-2 text-center" title="Rows">
+                <th className="px-1 py-2 text-center" title="Rows">
                   <ListChecks className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
                   <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Rows </span>
                 </th>
-                <th className="px-2 py-2 text-center" title="Labeled">
+                <th className="px-1 py-2 text-center" title="Labeled">
                   <CheckCircle className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
                   <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Labeled </span>
                 </th>
-                <th className="px-2 py-2 text-center" title="Coverage">
+                <th className="px-1 py-2 text-center" title="Coverage">
                   <PieChart className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
                   <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Coverage </span>
                 </th>
-                <th className="px-2 py-2 text-center" title="Created">
+                <th className="px-1 py-2 text-center" title="Created">
                   <Calendar className="inline w-4 h-4 mr-1 text-gray-600 dark:text-gray-300" />
                   <span className="hidden sm:inline text-gray-700 dark:text-gray-300">Created </span>
                 </th>
@@ -383,11 +383,11 @@ export function Analytics() {
             <tbody>
               {datasetStats.map(ds => (
                 <tr key={ds.datasetId} className="border-b">
-                  <td className="px-2 py-2 whitespace-nowrap">{ds.datasetName}</td>
-                  <td className="px-2 py-2 text-center whitespace-nowrap">{ds.totalRows}</td>
-                  <td className="px-2 py-2 text-center whitespace-nowrap">{ds.labeledRows}</td>
-                  <td className="px-2 py-2 text-center whitespace-nowrap">{ds.labelCoverage}%</td>
-                  <td className="px-2 py-2 text-center whitespace-nowrap">
+                  <td className="px-1 py-2 whitespace-nowrap">{ds.datasetName}</td>
+                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.totalRows}</td>
+                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labeledRows}</td>
+                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labelCoverage}%</td>
+                  <td className="px-1 py-2 text-center whitespace-nowrap">
                     {new Date(ds.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
