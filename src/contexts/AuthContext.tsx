@@ -154,8 +154,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const expiresAt = payload.exp * 1000;
   
     const timeout = expiresAt - Date.now() - 60000;
-
-    console.log({timeout})
   
     if (refreshTimer.current) {
       clearTimeout(refreshTimer.current);

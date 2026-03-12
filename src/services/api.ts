@@ -14,7 +14,6 @@ class ApiService {
 
   private async refreshAccessToken(): Promise<boolean> {
     const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
-    console.log("refreshToken: ", refreshToken)
 
     if (!refreshToken) return false;
 
@@ -31,6 +30,7 @@ class ApiService {
 
       if (data.success && data.data?.accessToken) {
         localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.data.accessToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.data.refreshToken);
         return true;
       }
 
