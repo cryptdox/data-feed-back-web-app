@@ -352,7 +352,8 @@ export function Analytics() {
       </Card>
 
 
-      {/* Dataset Stats */}<Card title="Dataset Stats">
+      {/* Dataset Stats */}
+      <Card title="Dataset Stats">
         <div className="overflow-x-auto">
           <table className="w-full table-auto border-collapse border border-gray-200 min-w-max">
 
