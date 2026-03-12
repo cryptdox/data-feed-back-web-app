@@ -32,6 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (token) {
       if (isTokenExpired(token)) {
         refreshAccessToken();
+        setLoading(false);
         return;
       }
   
@@ -48,14 +49,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       } catch {
         logout();
+        setLoading(false);
       }
     }
-  
     setLoading(false);
   }, [token]);
 
   const refreshAccessToken = async (): Promise<boolean> => {
-    if (!refreshToken) {
+    const storedRefreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+    if (!storedRefreshToken) {
       logout();
       return false;
     }
@@ -64,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await fetch(`${AUTH_API_URL}/api/auth/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken }),
+        body: JSON.stringify({ refreshToken: storedRefreshToken }),
       });
 
       if (!response.ok) {
@@ -152,6 +154,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const expiresAt = payload.exp * 1000;
   
     const timeout = expiresAt - Date.now() - 60000;
+
+    console.log({timeout})
   
     if (refreshTimer.current) {
       clearTimeout(refreshTimer.current);
