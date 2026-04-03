@@ -248,6 +248,10 @@ export function Labeling() {
         </Card>
       )}
 
+      <div className="">
+        <AdUnit slotId="6108526231" />
+      </div>
+
       {loading && <Loading message="Loading data..." />}
 
       {/* Data and labels */}
@@ -263,7 +267,6 @@ export function Labeling() {
               ))}
             </div>
           </Card>
-
 
           <div className="">
             <AdUnit slotId="6108526231" />
