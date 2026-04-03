@@ -6,6 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { apiService } from '../services/api';
 import { Dataset, Data } from '../types';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import AdUnit from '../services/Ads';
 
 export function Labeling() {
   const { t } = useLanguage();
@@ -262,6 +263,11 @@ export function Labeling() {
               ))}
             </div>
           </Card>
+
+
+          <div className="">
+            <AdUnit slotId="7518539777" />
+          </div>
 
           <Card title="Apply Labels">
             <div className="space-y-6">
