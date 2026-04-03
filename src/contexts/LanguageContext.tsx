@@ -3,10 +3,16 @@ import { Language } from '../types';
 import { translations } from '../i18n/translations';
 import { STORAGE_KEYS } from '../constants';
 
+type WidenStrings<T> = {
+  [K in keyof T]: T[K] extends string ? string : T[K] extends object ? WidenStrings<T[K]> : T[K]
+};
+
+type Translation = WidenStrings<typeof translations.en>;
+
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: typeof translations.en;
+  t: Translation;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

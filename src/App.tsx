@@ -13,7 +13,11 @@ import { Labeling } from './pages/Labeling';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
 import { Loading } from './components/Loading';
+import { About } from './pages/About';
+import { Contact } from './pages/Contact';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { useInactivityLogout } from './contexts/InactivityLogout';
+
 
 function AppContent() {
   useInactivityLogout();
@@ -44,6 +48,12 @@ function AppContent() {
         return <Analytics />;
       case 'settings':
         return <Settings />;
+      case 'about':
+        return <About />;
+      case 'contact':
+        return <Contact />;
+      case 'privacy-policy':
+        return <PrivacyPolicy />;
       default:
         return <Home onNavigate={setCurrentPage} />;
     }

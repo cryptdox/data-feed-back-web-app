@@ -8,7 +8,7 @@ interface HomeProps {
 }
 
 export function Home({ onNavigate }: HomeProps) {
-  const { t } = useLanguage();
+  const { } = useLanguage();
 
   const features = [
     {

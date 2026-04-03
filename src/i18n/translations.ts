@@ -7,6 +7,9 @@ export const translations = {
       labeling: 'Labeling',
       analytics: 'Analytics',
       settings: 'Settings',
+      about: 'About',
+      contact: 'Contact',
+      privacyPolicy: 'Privacy Policy',
     },
     common: {
       create: 'Create',
@@ -58,6 +61,55 @@ export const translations = {
       alreadyHaveAccount: 'Already have an account?',
       passwordRequirements: 'Min 8 chars, 1 uppercase, 1 number, 1 special',
     },
+    contact: {
+      title: 'Get in Touch',
+      subtitle: 'Have questions? We\'d love to hear from you. Send us a message and we\'ll get back to you as soon as possible.',
+      form: {
+        name: 'Name',
+        email: 'Email',
+        subject: 'Subject',
+        message: 'Message',
+        sending: 'Sending...',
+        sent: 'Message Sent!',
+        error: 'Message failed to send. Please try again.',
+      },
+      info: {
+        email: 'Email',
+        phone: 'Phone',
+        address: 'Address',
+        social: 'Social Media',
+      },
+    },
+    about: {
+      title: 'Our Mission',
+      subtitle: 'Empowering innovation through high-quality data annotation and feedback loops.',
+      story: {
+        title: 'The Story Behind DataLabel',
+        content1: 'DataLabel Space was born out of a simple necessity: the need for precise, high-quality labeled data to drive the next generation of AI models. We realized that while data is abundant, meaningful data is rare.',
+        content2: 'Our platform bridges the gap between raw information and actionable insights, providing researchers and developers with the tools they need to train models that truly understand the world.',
+      },
+      values: [
+        { title: 'Precision', description: 'Accuracy is our cornerstone. We ensure every label meets the highest standards.' },
+        { title: 'Efficiency', description: 'Streamlined workflows to get your data ready for training faster than ever.' },
+        { title: 'Security', description: 'Your data is your most valuable asset. We protect it with enterprise-grade security.' },
+      ],
+      stats: {
+        datasets: 'Datasets Created',
+        labels: 'Labels Annotated',
+        users: 'Active Researchers',
+      }
+    },
+    privacyPolicy: {
+      title: 'Privacy Policy',
+      lastUpdated: 'Last Updated: April 2024',
+      intro: 'At DataLabel Space, we take your privacy seriously. This policy outlines how we collect, use, and protect your information.',
+      sections: [
+        { title: '1. Data Collection', content: 'We collect information you provide directly to us, such as when you create an account, upload datasets, or contact support.' },
+        { title: '2. Use of Information', content: 'The data we collect is used to provide, maintain, and improve our services, and to develop new features.' },
+        { title: '3. Data Security', content: 'We implement advanced security measures to protect your data from unauthorized access, alteration, or destruction.' },
+        { title: '4. Your Rights', content: 'You have the right to access, correct, or delete your personal data at any time through your account settings.' },
+      ]
+    },
   },
   bn: {
     nav: {
@@ -67,6 +119,9 @@ export const translations = {
       labeling: 'লেবেলিং',
       analytics: 'বিশ্লেষণ',
       settings: 'সেটিংস',
+      about: 'সম্পর্কে',
+      contact: 'যোগাযোগ',
+      privacyPolicy: 'গোপনীয়তা নীতি',
     },
     common: {
       create: 'তৈরি করুন',
@@ -117,6 +172,55 @@ export const translations = {
       signIn: 'সাইন ইন করুন',
       alreadyHaveAccount: 'ইতিমধ্যে অ্যাকাউন্ট আছে?',
       passwordRequirements: '৮ অক্ষর মিন, ১ বড়, ১ সংখ্যা, ১ বিশেষ',
+    },
+    contact: {
+      title: 'আমাদের সাথে যোগাযোগ করুন',
+      subtitle: 'আপনার কি কোনো প্রশ্ন আছে? আমরা আপনার কাছ থেকে শুনতে আগ্রহী। একটি বার্তা পাঠান এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।',
+      form: {
+        name: 'নাম',
+        email: 'ইমেইল',
+        subject: 'বিষয়',
+        message: 'বার্তা',
+        sending: 'পাঠানো হচ্ছে...',
+        sent: 'বার্তা পাঠানো হয়েছে!',
+        error: 'বার্তা পাঠাতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।',
+      },
+      info: {
+        email: 'ইমেইল',
+        phone: 'ফোন',
+        address: 'ঠিকানা',
+        social: 'সোশ্যাল মিডিয়া',
+      },
+    },
+    about: {
+      title: 'আমাদের লক্ষ্য',
+      subtitle: 'উচ্চমানের ডেটা অ্যানোটেশন এবং ফিডব্যাক লুপের মাধ্যমে উদ্ভাবনকে শক্তিশালী করা।',
+      story: {
+        title: 'ডেটালেবেল-এর পেছনের গল্প',
+        content1: 'ডেটালেবেল স্পেসের জন্ম হয়েছে একটি সাধারণ প্রয়োজনীয়তা থেকে: পরবর্তী প্রজন্মের এআই মডেলগুলো পরিচালনার জন্য নির্ভুল এবং উচ্চমানের লেবেলযুক্ত ডেটার প্রয়োজন। আমরা বুঝতে পেরেছি যে ডেটা প্রচুর হলেও অর্থবহ ডেটা বিরল।',
+        content2: 'আমাদের প্ল্যাটফর্ম কাঁচা তথ্য এবং ব্যবহারযোগ্য অন্তর্দৃষ্টির মধ্যেকার দূরত্ব দূর করে, গবেষক ও ডেভেলপারদের এমন টুলস প্রদান করে যা দিয়ে তারা পৃথিবীকে সত্যই বুঝতে পারে এমন মডেল তৈরি করতে পারে।',
+      },
+      values: [
+        { title: 'নির্ভুলতা', description: 'নির্ভুলতা আমাদের মূলভিত্তি। আমরা নিশ্চিত করি যে প্রতিটি লেবেল সর্বোচ্চ মান পূরণ করে।' },
+        { title: 'দক্ষতা', description: 'আপনার ডেটা প্রশিক্ষণের জন্য আগের চেয়ে দ্রুত প্রস্তুত করতে সুশৃঙ্খল কর্মপ্রবাহ।' },
+        { title: 'নিরাপত্তা', description: 'আপনার ডেটা আপনার সবচেয়ে মূল্যবান সম্পদ। আমরা এটি এন্টারপ্রাইজ-গ্রেড নিরাপত্তা দিয়ে রক্ষা করি।' },
+      ],
+      stats: {
+        datasets: 'তৈরি করা ডেটাসেট',
+        labels: 'অ্যানোটেটেড লেবেল',
+        users: 'সক্রিয় গবেষক',
+      }
+    },
+    privacyPolicy: {
+      title: 'গোপনীয়তা নীতি',
+      lastUpdated: 'সর্বশেষ আপডেট: এপ্রিল ২০২৪',
+      intro: 'ডেটালেবেল স্পেস এ, আমরা আপনার গোপনীয়তাকে গুরুত্ব সহকারে গ্রহণ করি। এই নীতিটি আমাদের আপনার তথ্য সংগ্রহ, ব্যবহার এবং সুরক্ষার উপায় বর্ণনা করে।',
+      sections: [
+        { title: '১. ডেটা সংগ্রহ', content: 'আপনি যখন অ্যাকাউন্ট তৈরি করেন, ডেটাসেট আপলোড করেন বা সাপোর্টের সাথে যোগাযোগ করেন, আমরা সরাসরি আপনার প্রদান করা তথ্য সংগ্রহ করি।' },
+        { title: '২. তথ্যের ব্যবহার', content: 'সংগৃহীত ডেটা আমাদের পরিষেবা প্রদান, রক্ষণাবেক্ষণ ও উন্নত করতে এবং নতুন বৈশিষ্ট্য তৈরি করতে ব্যবহৃত হয়।' },
+        { title: '৩. ডেটা নিরাপত্তা', content: 'অননুমোদিত অ্যাক্সেস, পরিবর্তন বা ধ্বংস থেকে আপনার ডেটা রক্ষা করতে আমরা উন্নত নিরাপত্তা ব্যবস্থা গ্রহণ করি।' },
+        { title: '৪. আপনার অধিকার', content: 'আপনার অ্যাকাউন্ট সেটিংসের মাধ্যমে যেকোনো সময় আপনার ব্যক্তিগত ডেটা অ্যাক্সেস, সংশোধন বা মুছে ফেলার অধিকার আপনার রয়েছে।' },
+      ]
     },
   },
 } as const;

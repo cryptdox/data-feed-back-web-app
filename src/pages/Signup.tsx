@@ -12,7 +12,7 @@ interface SignupProps {
 }
 
 export function Signup({ onSwitchToLogin }: SignupProps) {
-  const { login } = useAuth();
+  const { } = useAuth();
   const { theme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
