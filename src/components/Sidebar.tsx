@@ -1,6 +1,6 @@
 import { Database, Upload, Tag, BarChart3, Settings, Home, Info, Mail, FileText } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import AdUnit from '../services/Ads';
+import { AdUnitAuto } from '../services/Ads';
 
 interface SidebarProps {
   currentPage: string;
@@ -50,7 +50,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
         })}
       </nav>
       <div className="">
-        <AdUnit slotId="7518539777" />
+        <AdUnitAuto slotId="7518539777" />
       </div>
 
       {/* Footer Menu */}

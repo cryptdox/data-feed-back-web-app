@@ -6,7 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { apiService } from '../services/api';
 import { Dataset, Data } from '../types';
 import { ArrowRight, CheckCircle } from 'lucide-react';
-import AdUnit from '../services/Ads';
+import { AdUnitAuto, AdUnitRelaxed } from '../services/Ads';
 
 export function Labeling() {
   const { t } = useLanguage();
@@ -249,7 +249,7 @@ export function Labeling() {
       )}
 
       <div className="">
-        <AdUnit slotId="6108526231" />
+        <AdUnitRelaxed slotId="2066902541" />
       </div>
 
       {loading && <Loading message="Loading data..." />}
@@ -269,7 +269,7 @@ export function Labeling() {
           </Card>
 
           <div className="">
-            <AdUnit slotId="6108526231" />
+            <AdUnitAuto slotId="6108526231" />
           </div>
 
           <Card title="Apply Labels">
