@@ -266,7 +266,7 @@ export function Labeling() {
 
 
           <div className="">
-            <AdUnit slotId="7518539777" />
+            <AdUnit slotId="6108526231" />
           </div>
 
           <Card title="Apply Labels">
