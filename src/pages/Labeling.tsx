@@ -244,8 +244,9 @@ export function Labeling() {
       {/* Dataset description */}
       {selectedDatasetInfo && (
         <Card title="Dataset description">
-          <p className="text-justify leading-relaxed text-gray-700 dark:text-gray-300">{selectedDatasetInfo.description}</p>
-        </Card>
+          <p className="text-justify leading-relaxed text-gray-700 dark:text-gray-300 whitespace-pre-line">
+            {selectedDatasetInfo.description}
+          </p>        </Card>
       )}
 
       {/* <div className="">
