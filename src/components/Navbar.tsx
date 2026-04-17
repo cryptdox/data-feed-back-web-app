@@ -70,7 +70,10 @@ export function Navbar({ onToggleSidebar, onNavigate }: NavbarProps) {
                 className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                 title="Logout"
               >
-                <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
+                <div className="flex items-center gap-2">
+                  <span>Logout</span>
+                  <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
+                </div>
               </button>
             ) :
               <button
@@ -78,8 +81,8 @@ export function Navbar({ onToggleSidebar, onNavigate }: NavbarProps) {
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 title="Login"
               >
-                {/* Rotate this icon 90 degree right */}
-                <div className="transform rotate-90">
+                <div className="flex items-center gap-2">
+                  <span>Login</span>
                   <LogIn className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </div>
               </button>
