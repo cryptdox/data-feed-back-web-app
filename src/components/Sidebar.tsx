@@ -49,9 +49,9 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           );
         })}
       </nav>
-      <div className="">
+      {/* <div className="">
         <AdUnitAuto slotId="7518539777" />
-      </div>
+      </div> */}
 
       {/* Footer Menu */}
       <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
