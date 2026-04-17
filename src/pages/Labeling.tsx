@@ -6,7 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { apiService } from '../services/api';
 import { Dataset, Data } from '../types';
 import { ArrowRight, CheckCircle } from 'lucide-react';
-import { AdUnitAuto, AdUnitRelaxed } from '../services/Ads';
+// import { AdUnitAuto, AdUnitRelaxed } from '../services/Ads';
 
 export function Labeling() {
   const { t } = useLanguage();
@@ -248,9 +248,9 @@ export function Labeling() {
         </Card>
       )}
 
-      <div className="">
+      {/* <div className="">
         <AdUnitRelaxed slotId="2066902541" />
-      </div>
+      </div> */}
 
       {loading && <Loading message="Loading data..." />}
 
@@ -268,9 +268,9 @@ export function Labeling() {
             </div>
           </Card>
 
-          <div className="">
+          {/* <div className="">
             <AdUnitAuto slotId="6108526231" />
-          </div>
+          </div> */}
 
           <Card title="Apply Labels">
             <div className="space-y-6">
@@ -301,7 +301,7 @@ export function Labeling() {
               {success && <div className="p-4 bg-green-50 border border-green-200 rounded-lg">Feedback submitted successfully!</div>}
 
               <div className="flex gap-3">
-                <Button onClick={handleSubmit} disabled={submitting || Object.keys(labelValues).length === 0} className="flex-1">
+                <Button onClick={handleSubmit} disabled={submitting || Object.keys(labelValues).length !== Object.keys(datasetInfo.labels).length} className="flex-1">
                   {submitting ? 'Submitting...' : t.labeling.submitFeedback}
                 </Button>
                 <Button onClick={loadRandomData} variant="secondary">
