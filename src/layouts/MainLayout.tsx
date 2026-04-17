@@ -23,7 +23,7 @@ export function MainLayout({ children, currentPage, onNavigate }: MainLayoutProp
       {/* Sidebar for large screens */}
       <div className="hidden md:block">
         <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-4 overflow-y-auto overflow-x-hidden scrollbar-none">
-          <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
+          <Sidebar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} currentPage={currentPage} onNavigate={onNavigate} />
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export function MainLayout({ children, currentPage, onNavigate }: MainLayoutProp
 
           {/* sidebar container */}
           <div className="relative w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full p-4 pt-16 z-50 overflow-y-auto overflow-x-hidden scrollbar-none">
-            <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
+            <Sidebar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} currentPage={currentPage} onNavigate={onNavigate} />
           </div>
         </div>
       )}

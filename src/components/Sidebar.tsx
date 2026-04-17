@@ -3,11 +3,12 @@ import { useLanguage } from '../contexts/LanguageContext';
 // import { AdUnitAuto } from '../services/Ads';
 
 interface SidebarProps {
+  onToggleSidebar: () => void;
   currentPage: string;
   onNavigate: (page: string) => void;
 }
 
-export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+export function Sidebar({ onToggleSidebar, currentPage, onNavigate }: SidebarProps) {
   const { t } = useLanguage();
 
   const menuItems = [
@@ -37,7 +38,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id)}
+              onClick={() => { onNavigate(item.id); onToggleSidebar && onToggleSidebar(); }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${isActive
                 ? 'bg-gradient-to-r from-[#00a8ff] to-[#0097e6] text-white shadow-lg'
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -62,7 +63,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id)}
+              onClick={() => { onNavigate(item.id); onToggleSidebar(); }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${isActive
                 ? 'bg-gradient-to-r from-[#00a8ff] to-[#0097e6] text-white shadow-lg'
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'

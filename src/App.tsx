@@ -40,6 +40,8 @@ function AppContent() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'home':
+        return <Home onNavigate={setCurrentPage} />;
       case 'datasets':
         return <Datasets onNavigate={setCurrentPage} />;
       case 'create-dataset':
