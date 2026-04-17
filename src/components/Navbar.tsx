@@ -1,13 +1,16 @@
-import { Moon, Sun, Globe, Rocket, LogOut, Menu } from 'lucide-react';
+import { Moon, Sun, Globe, Rocket, LogOut, Menu, LogIn } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 
 interface NavbarProps {
   onToggleSidebar?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export function Navbar({ onToggleSidebar }: NavbarProps) {
+export function Navbar({ onToggleSidebar, onNavigate }: NavbarProps) {
+
+  const { isAuthenticated } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const { user, handleLogout } = useAuth();
@@ -27,10 +30,10 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
               </button>
             )}
 
-            <div className="w-10 h-10 bg-gradient-to-br from-space-blue to-space-purple rounded-lg flex items-center justify-center">
+            <div onClick={() => onNavigate && onNavigate('home')} className="w-10 h-10 bg-gradient-to-br from-space-blue to-space-purple rounded-lg flex items-center justify-center cursor-pointer">
               <Rocket className="w-6 h-6 text-white" />
             </div>
-            <div>
+            <div onClick={() => onNavigate && onNavigate('home')} className="cursor-pointer">
               <span className="block text-lg font-bold bg-gradient-to-r from-space-blue to-space-purple bg-clip-text text-transparent">
                 DataHub
               </span>
@@ -61,13 +64,26 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
               )}
             </button>
 
-            <button
-              onClick={handleLogout}
-              className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-              title="Logout"
-            >
-              <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
-            </button>
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
+              </button>
+            ) :
+              <button
+                onClick={() => onNavigate && onNavigate('login')}
+                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                title="Login"
+              >
+                {/* Rotate this icon 90 degree right */}
+                <div className="transform rotate-90">
+                  <LogIn className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                </div>
+              </button>
+            }
           </div>
         </div>
       </div>

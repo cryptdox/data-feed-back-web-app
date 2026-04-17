@@ -11,6 +11,31 @@ export const translations = {
       contact: 'Contact',
       privacyPolicy: 'Privacy Policy',
     },
+    home: {
+      title: 'DataLabel Space',
+      subtitle: 'Your mission control for data labeling and annotation. Collect high-quality labeled data for machine learning projects.',
+      getStarted: 'Get Started',
+      features: {
+        createDatasets: {
+          title: 'Create Datasets',
+          description: 'Define your data structure with custom labels and categories',
+          action: 'datasets',
+          color: 'from-[#00a8ff] to-[#0097e6]',
+        },
+        uploadData: {
+          title: 'Upload Data',
+          description: 'Import your data from CSV or Excel files',
+          action: 'upload',
+          color: 'from-[#9c88ff] to-[#8c7ae6]',
+        },
+        labelData: {
+          title: 'Label Data',
+          description: 'Annotate and classify your data for machine learning',
+          action: 'labeling',
+          color: 'from-[#4cd137] to-[#44bd32]',
+        },
+      },
+    },
     common: {
       create: 'Create',
       upload: 'Upload',
@@ -122,6 +147,31 @@ export const translations = {
       about: 'সম্পর্কে',
       contact: 'যোগাযোগ',
       privacyPolicy: 'গোপনীয়তা নীতি',
+    },
+    home: {
+      title: 'ডেটালেবেল স্পেস',
+      subtitle: 'আপনার ডেটা লেবেলিং এবং অ্যানোটেশন মিশনের কন্ট্রোল সেন্টার। মেশিন লার্নিং প্রকল্পের জন্য উচ্চ-মানের লেবেলযুক্ত ডেটা সংগ্রহ করুন।',
+      getStarted: 'শুরু করুন',
+      features: {
+        createDatasets: {
+          title: 'ডেটাসেট তৈরি করুন',
+          description: 'আপনার ডেটা স্ট্রাকচার কাস্টম লেবেল এবং বিভাগগুলির সাথে সংজ্ঞায়িত করুন',
+          action: 'datasets',
+          color: 'from-[#00a8ff] to-[#0097e6]',
+        },
+        uploadData: {
+          title: 'ডেটা আপলোড করুন',
+          description: 'CSV বা Excel ফাইল থেকে আপনার ডেটা ইম্পোর্ট করুন',
+          action: 'upload',
+          color: 'from-[#9c88ff] to-[#8c7ae6]',
+        },
+        labelData: {
+          title: 'ডেটা লেবেল করুন',
+          description: 'মেশিন লার্নিংয়ের জন্য আপনার ডেটা অ্যানোটেট এবং শ্রেণীবদ্ধ করুন',
+          action: 'labeling',
+          color: 'from-[#4cd137] to-[#44bd32]',
+        },
+      },
     },
     common: {
       create: 'তৈরি করুন',

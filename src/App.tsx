@@ -17,6 +17,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { useInactivityLogout } from './contexts/InactivityLogout';
+import { PublicLayout } from './layouts/PublicLayout';
 
 
 function AppContent() {
@@ -28,14 +29,17 @@ function AppContent() {
     return <Loading message="Loading..." />;
   }
 
-  if (!isAuthenticated) {
-    return <Login />;
+  const renderPublicPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Home onNavigate={setCurrentPage} />;
+      default:
+        return <Login />;
+    }
   }
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'home':
-        return <Home onNavigate={setCurrentPage} />;
       case 'datasets':
         return <Datasets onNavigate={setCurrentPage} />;
       case 'create-dataset':
@@ -55,9 +59,18 @@ function AppContent() {
       case 'privacy-policy':
         return <PrivacyPolicy />;
       default:
-        return <Home onNavigate={setCurrentPage} />;
+        return <Analytics />;
     }
   };
+
+
+  if (!isAuthenticated) {
+    return (
+      <PublicLayout currentPage={currentPage} onNavigate={setCurrentPage}>
+        {renderPublicPage()}
+      </PublicLayout>
+    );
+  }
 
   return (
     <MainLayout currentPage={currentPage} onNavigate={setCurrentPage}>

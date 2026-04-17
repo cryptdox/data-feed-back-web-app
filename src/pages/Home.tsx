@@ -8,27 +8,27 @@ interface HomeProps {
 }
 
 export function Home({ onNavigate }: HomeProps) {
-  const { } = useLanguage();
+  const { t } = useLanguage();
 
   const features = [
     {
       icon: Database,
-      title: 'Create Datasets',
-      description: 'Define your data structure with custom labels and categories',
+      title: t.home.features.createDatasets.title,
+      description: t.home.features.createDatasets.description,
       action: 'datasets',
       color: 'from-[#00a8ff] to-[#0097e6]',
     },
     {
       icon: Upload,
-      title: 'Upload Data',
-      description: 'Import your data from CSV or Excel files',
+      title: t.home.features.uploadData.title,
+      description: t.home.features.uploadData.description,
       action: 'upload',
       color: 'from-[#9c88ff] to-[#8c7ae6]',
     },
     {
       icon: Tag,
-      title: 'Label Data',
-      description: 'Annotate and classify your data for machine learning',
+      title: t.home.features.labelData.title,
+      description: t.home.features.labelData.description,
       action: 'labeling',
       color: 'from-[#4cd137] to-[#44bd32]',
     },
@@ -41,10 +41,10 @@ export function Home({ onNavigate }: HomeProps) {
           <Rocket className="w-12 h-12 text-white" />
         </div>
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#00a8ff] to-[#9c88ff] bg-clip-text text-transparent">
-          DataLabel Space
+          {t.home.title}
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Your mission control for data labeling and annotation. Collect high-quality labeled data for machine learning projects.
+          {t.home.subtitle}
         </p>
       </div>
 
@@ -63,7 +63,7 @@ export function Home({ onNavigate }: HomeProps) {
                 {feature.description}
               </p>
               <Button onClick={() => onNavigate(feature.action)} className="w-full">
-                Get Started
+                {t.home.getStarted}
               </Button>
             </Card>
           );
@@ -74,10 +74,10 @@ export function Home({ onNavigate }: HomeProps) {
         <div className="text-white py-6">
           <h2 className="text-2xl font-bold mb-3">Ready to Launch?</h2>
           <p className="text-gray-300 mb-6">
-            Start creating datasets, uploading data, and collecting valuable feedback for your ML projects.
+            {t.home.subtitle}
           </p>
           <Button onClick={() => onNavigate('datasets')} variant="primary">
-            Create Your First Dataset
+            {t.common.create}
           </Button>
         </div>
       </Card>
