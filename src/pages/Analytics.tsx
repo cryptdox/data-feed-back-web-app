@@ -354,8 +354,8 @@ export function Analytics() {
 
       {/* Dataset Stats */}
       <Card title="Dataset Stats">
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto border-collapse border border-gray-200 min-w-max">
+        <div className="overflow-x-auto overflow-auto max-h-[400px]">
+          <table className="w-full table-auto border-collapse border border-gray-200">
 
             <thead>
               <tr className="bg-gray-100 dark:bg-gray-700">
@@ -384,7 +384,7 @@ export function Analytics() {
             <tbody>
               {datasetStats.map(ds => (
                 <tr key={ds.datasetId} className="border-b">
-                  <td className="px-1 py-2 whitespace-nowrap">{ds.datasetName}</td>
+                  <td className="px-1 py-2 whitespace-nowra truncate max-w-[100px]">{ds.datasetName}</td>
                   <td className="px-1 py-2 text-center whitespace-nowrap">{ds.totalRows}</td>
                   <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labeledRows}</td>
                   <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labelCoverage}%</td>

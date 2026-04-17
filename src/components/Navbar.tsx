@@ -71,7 +71,7 @@ export function Navbar({ onToggleSidebar, onNavigate }: NavbarProps) {
                 title="Logout"
               >
                 <div className="flex items-center gap-2">
-                  <span>Logout</span>
+                  {/* <span>Logout</span> */}
                   <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
                 </div>
               </button>
