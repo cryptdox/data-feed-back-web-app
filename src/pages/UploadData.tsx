@@ -42,7 +42,7 @@ export function UploadData() {
   const loadDatasets = async (searchText = '') => {
     try {
       setLoadingSearch(true);
-      const response = await apiService.listDatasets({
+      const response = await apiService.listMyDatasets({
         limit: 100,
         search: searchText,
       });
@@ -180,11 +180,10 @@ export function UploadData() {
             </label>
 
             <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${
-                dragActive
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${dragActive
                   ? 'border-[#00a8ff] bg-blue-50 dark:bg-blue-900/20'
                   : 'border-gray-300 dark:border-gray-600'
-              }`}
+                }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
               onDragOver={handleDrag}

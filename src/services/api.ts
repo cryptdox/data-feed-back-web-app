@@ -130,6 +130,20 @@ class ApiService {
     return this.request<PaginatedResponse<Dataset>>(`/api/dataset?${query}`);
   }
 
+
+  async listMyDatasets(params?: {
+    offset?: number;
+    limit?: number;
+    search?: string;
+  }): Promise<ApiResponse<PaginatedResponse<Dataset>>> {
+
+    const query = new URLSearchParams(
+      Object.entries(params || {}).map(([k, v]) => [k, String(v)])
+    );
+
+    return this.request<PaginatedResponse<Dataset>>(`/api/dataset/my-datasets?${query}`);
+  }
+
   async getDataset(datasetId: string): Promise<ApiResponse<Dataset>> {
     return this.request<Dataset>(`/api/dataset/${datasetId}`);
   }

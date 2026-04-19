@@ -48,6 +48,9 @@ export function Analytics() {
   const [feedbackTrend, setFeedbackTrend] = useState<FeedbackTrendItem[]>([]);
   const [datasetStats, setDatasetStats] = useState<DatasetStatsItem[]>([]);
 
+
+  console.log(datasetStats)
+
   let debounceTimer: any;
 
 
@@ -382,14 +385,30 @@ export function Analytics() {
               </tr>
             </thead>
             <tbody>
-              {datasetStats.map(ds => (
-                <tr key={ds.datasetId} className="border-b">
-                  <td className="px-1 py-2 whitespace-nowra truncate max-w-[100px]">{ds.datasetName}</td>
-                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.totalRows}</td>
-                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labeledRows}</td>
-                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds.labelCoverage}%</td>
+              {datasetStats?.map(ds => (
+                <tr key={ds?.datasetId} className="border-b">
+                  <td className="px-1 py-2 whitespace-nowra truncate max-w-[100px]">{ds?.datasetName}</td>
+                  <td className="px-1 py-2 text-center whitespace-nowrap">{ds?.totalRows}</td>
+                  {/* <td className="px-1 py-2 text-center whitespace-nowrap">{ds?.labeledRows}</td> */}
+                  <td className="px-1 py-2 whitespace-nowrap">
+                    {ds?.labeledRows?.map((row) => (
+                      <div key={row.userId} className="text-center">
+                        {/* {row.userId.slice(0, 4)}... :  */}
+                        {row._count.userId}
+                      </div>
+                    ))}
+                  </td>
+                  <td className="px-1 py-2 whitespace-nowrap text-center">
+                    {ds.labelCoverage.map((u) => (
+                      <div key={u.userId}>
+                        {/* {u.userId.slice(0, 4)}... :  */}
+                        {u.coverage}%
+                      </div>
+                    ))}
+                  </td>
+                  {/* <td className="px-1 py-2 text-center whitespace-nowrap">{ds?.labelCoverage}%</td> */}
                   <td className="px-1 py-2 text-center whitespace-nowrap">
-                    {new Date(ds.createdAt).toLocaleDateString()}
+                    {new Date(ds?.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
               ))}

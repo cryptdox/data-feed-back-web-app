@@ -97,8 +97,12 @@ export interface DatasetStatsItem {
   datasetId: string
   datasetName: string
   totalRows: number
-  labeledRows: number
-  labelCoverage: number
+  labeledRows: { _count: { userId: number }, userId: string }[]
+  labelCoverage: {
+    userId: string
+    count: number
+    coverage: number
+  }[]
   createdAt: string
 }
 
