@@ -391,18 +391,18 @@ export function Analytics() {
                   <td className="px-1 py-2 text-center whitespace-nowrap">{ds?.totalRows}</td>
                   {/* <td className="px-1 py-2 text-center whitespace-nowrap">{ds?.labeledRows}</td> */}
                   <td className="px-1 py-2 whitespace-nowrap">
-                    {ds?.labeledRows?.map((row) => (
-                      <div key={row.userId} className="text-center">
+                    {ds?.labeledRows?.map((row: any) => (
+                      <div key={row?.userId ?? Math.random()} className="text-center">
                         {/* {row.userId.slice(0, 4)}... :  */}
-                        {row._count.userId}
+                        {row?._count?.userId ?? 0}
                       </div>
                     ))}
                   </td>
                   <td className="px-1 py-2 whitespace-nowrap text-center">
-                    {ds.labelCoverage.map((u) => (
-                      <div key={u.userId}>
+                    {ds?.labelCoverage?.map((u: any) => (
+                      <div key={u?.userId ?? Math.random()}>
                         {/* {u.userId.slice(0, 4)}... :  */}
-                        {u.coverage}%
+                        {u?.coverage ?? 0}%
                       </div>
                     ))}
                   </td>
