@@ -18,7 +18,7 @@ export function Datasets({ onNavigate }: DatasetsProps) {
   const [offset, setOffset] = useState(0);
   const [limit] = useState(9);
   const [selectedDataset, setSelectedDataset] = useState<Dataset | null>(null);
-
+  const [usersFeedback, setUsersFeedback] = useState<any>(null);
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
@@ -35,6 +35,20 @@ export function Datasets({ onNavigate }: DatasetsProps) {
   useEffect(() => {
     loadDatasets(offset);
   }, [offset, debouncedSearch]);
+
+  useEffect(() => {
+    if (selectedDataset) {
+      const loadUsersFeedback = async () => {
+        try {
+          const response = await apiService.getDatasetUsersFeedback(selectedDataset.datasetId);
+          setUsersFeedback(response.data);
+        } catch (error) {
+          console.error('Failed to load users feedback:', error);
+        }
+      };
+      loadUsersFeedback();
+    }
+  }, [selectedDataset]);
 
   const totalPages = Math.ceil(total / limit);
   const currentPage = offset / limit + 1;
@@ -174,61 +188,121 @@ export function Datasets({ onNavigate }: DatasetsProps) {
 
       </div>
 
-      {/* dataset modal */}
       {selectedDataset && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
 
-          <div className="bg-white dark:bg-gray-900 rounded-lg p-6 max-w-lg w-full">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
 
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
-                {selectedDataset.name}
-              </h2>
+            {/* HEADER */}
+            <div className="flex justify-between items-start p-5 border-b">
+              <div>
+                <h2 className="text-xl font-semibold dark:text-gray-100">
+                  {selectedDataset.name}
+                </h2>
+                <p className="text-xs text-gray-500 mt-1">
+                  Created {new Date(selectedDataset.createdAt).toLocaleDateString()}
+                </p>
+              </div>
 
               <button
                 onClick={() => setSelectedDataset(null)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-red-500 text-lg"
               >
                 ✕
               </button>
             </div>
 
-            {selectedDataset.description && (
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {selectedDataset.description}
-              </p>
-            )}
+            {/* BODY (SCROLLABLE) */}
+            <div className="p-5 overflow-y-auto scrollbar-none space-y-5">
 
-            <div className="mb-4">
-              <span className="font-medium">Labels:</span>
+              {/* DESCRIPTION (COLLAPSIBLE) */}
+              {selectedDataset.description && (
+                <details className="group">
+                  <summary className="cursor-pointer font-medium text-gray-700 dark:text-gray-300 flex justify-between items-center">
+                    Description
+                    <span className="text-xs text-gray-400 group-open:rotate-180 transition">
+                      ▼
+                    </span>
+                  </summary>
 
-              <div className="flex flex-wrap gap-2 mt-2">
-                {Object.keys(selectedDataset.labels).map(label => (
-                  <span
-                    key={label}
-                    className="px-2 py-1 bg-[#00a8ff]/10 text-[#00a8ff] rounded text-xs"
-                  >
-                    {label}
-                  </span>
-                ))}
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-100 max-h-40 overflow-y-auto scrollbar-none pr-1  whitespace-pre-line">
+                    {selectedDataset.description}
+                  </p>
+                </details>
+              )}
+
+              {/* TABLE */}
+              <div className="border rounded-xl overflow-hidden">
+                <div className="max-h-64 overflow-y-auto">
+                  <table className="min-w-full text-sm">
+                    <thead className="bg-gray-100 dark:bg-gray-800 sticky top-0">
+                      <tr>
+                        <th className="px-4 py-2 text-left dark:text-gray-100">User ID</th>
+                        <th className="px-4 py-2 text-left dark:text-gray-100">Feedback</th>
+                        <th className="px-4 py-2 text-left dark:text-gray-100">Total</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {usersFeedback?.userFeedbackCount?.map((item: any) => (
+                        <tr
+                          key={item.userId}
+                          className="border-t hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                        >
+                          <td className="px-4 py-2 break-all text-xs text-gray-600 dark:text-gray-100 ">
+                            {item.userId}
+                          </td>
+                          <td className="px-4 py-2 font-medium dark:text-gray-100">
+                            {item._count?.feedbackId}
+                          </td>
+                          <td className="px-4 py-2 dark:text-gray-100">
+                            {item._sum?.count}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* FOOTER */}
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 text-sm font-medium border-t flex justify-between dark:text-gray-100">
+                  <span>Total Data</span>
+                  <span>{usersFeedback?.dataCount}</span>
+                </div>
               </div>
+
+              {/* LABELS */}
+              <div>
+                <p className="font-medium mb-2 dark:text-gray-100">Labels</p>
+                <div className="flex flex-wrap gap-2">
+                  {Object.keys(selectedDataset.labels).map(label => (
+                    <span
+                      key={label}
+                      className="px-3 py-1 bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-full text-xs"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
             </div>
 
-            <p className="text-xs text-gray-500">
-              Created {new Date(selectedDataset.createdAt).toLocaleDateString()}
-            </p>
-
-            <div className="mt-6 text-right">
+            {/* FOOTER ACTION */}
+            <div className="p-4 border-t flex justify-end">
+              {/* keep download button here too */}
+              <Button variant="secondary" onClick={() => setSelectedDataset(null)}>
+                Download
+              </Button>
+              &nbsp;&nbsp;
               <Button onClick={() => setSelectedDataset(null)}>
                 Close
               </Button>
             </div>
 
           </div>
-
         </div>
       )}
-
     </div>
   );
 }

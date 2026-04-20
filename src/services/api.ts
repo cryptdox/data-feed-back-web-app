@@ -278,6 +278,10 @@ class ApiService {
     const query = new URLSearchParams(Object.entries(params || {}).map(([k, v]) => [k, String(v)]));
     return this.request<PaginatedResponse<FeedbackLog>>(`/api/feedback-log?${query}`);
   }
+
+  async getDatasetUsersFeedback(datasetId: string): Promise<ApiResponse<any>> {
+    return this.request<any>(`/api/feedback/users/${datasetId}`);
+  }
 }
 
 export const apiService = new ApiService();
