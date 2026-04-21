@@ -12,7 +12,7 @@ function Feedbacks() {
     const { t } = useLanguage();
     const [items, setItems] = useState<FeedbackSummaryItem[]>([]);
     const [offset, setOffset] = useState(0);
-    const [limit, setLimit] = useState(30);
+    const [limit, setLimit] = useState(20);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false);
 
