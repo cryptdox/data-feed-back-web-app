@@ -10,6 +10,7 @@ export const translations = {
       about: 'About',
       contact: 'Contact',
       privacyPolicy: 'Privacy Policy',
+      feedbacks: 'Feedbacks',
     },
     home: {
       title: 'DataLabel Space',
@@ -147,6 +148,7 @@ export const translations = {
       about: 'সম্পর্কে',
       contact: 'যোগাযোগ',
       privacyPolicy: 'গোপনীয়তা নীতি',
+      feedbacks: 'ফিডব্যাক',
     },
     home: {
       title: 'ডেটালেবেল স্পেস',

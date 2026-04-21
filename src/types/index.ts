@@ -132,3 +132,20 @@ export interface User {
 
 export type Theme = 'light' | 'dark';
 export type Language = 'en' | 'bn';
+
+export interface FeedbackSummaryItem {
+  feedbackId: string;
+  userId: string;
+  dataId: string;
+  url: string;
+  date: string; // or Date যদি parse করো
+  label: string;
+  topic: string;
+  source: string;
+  comment: string;
+  sentiment: string;
+  Label_mapped: string;
+  Sentiment_mapped: string;
+}
+
+export interface FeedbackSummaryResponse extends ApiResponse<PaginatedResponse<FeedbackSummaryItem>> { }

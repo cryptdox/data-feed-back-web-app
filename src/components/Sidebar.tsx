@@ -1,4 +1,4 @@
-import { Database, Upload, Tag, BarChart3, Settings, Home, Info, Mail, FileText } from 'lucide-react';
+import { Database, Upload, Tag, BarChart3, Settings, Home, Info, Mail, FileText, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 // import { AdUnitAuto } from '../services/Ads';
 
@@ -13,10 +13,10 @@ export function Sidebar({ onToggleSidebar, currentPage, onNavigate }: SidebarPro
 
   const menuItems = [
     { id: 'analytics', label: t.nav.analytics, icon: BarChart3 },
-    // { id: 'home', label: t.nav.home, icon: Home },
     { id: 'datasets', label: t.nav.datasets, icon: Database },
     { id: 'upload', label: t.nav.upload, icon: Upload },
     { id: 'labeling', label: t.nav.labeling, icon: Tag },
+    { id: 'feedbacks', label: t.nav.feedbacks, icon: MessageSquare },
     { id: 'settings', label: t.nav.settings, icon: Settings },
   ];
 

@@ -18,6 +18,7 @@ import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { useInactivityLogout } from './contexts/InactivityLogout';
 import { PublicLayout } from './layouts/PublicLayout';
+import Feedbacks from './pages/Feedbacks';
 
 
 function AppContent() {
@@ -50,6 +51,8 @@ function AppContent() {
         return <UploadData />;
       case 'labeling':
         return <Labeling />;
+      case 'feedbacks':
+        return <Feedbacks />;
       case 'analytics':
         return <Analytics />;
       case 'settings':
@@ -72,13 +75,13 @@ function AppContent() {
         {renderPublicPage()}
       </PublicLayout>
     );
+  } else {
+    return (
+      <MainLayout currentPage={currentPage} onNavigate={setCurrentPage}>
+        {renderPage()}
+      </MainLayout>
+    );
   }
-
-  return (
-    <MainLayout currentPage={currentPage} onNavigate={setCurrentPage}>
-      {renderPage()}
-    </MainLayout>
-  );
 }
 
 function App() {
