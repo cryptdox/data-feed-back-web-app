@@ -6,6 +6,7 @@ import { Button } from "../components/Button";
 import { Loading } from "../components/Loading";
 import { useLanguage } from "../contexts/LanguageContext";
 import { CheckCircle, X } from "lucide-react";
+import { CustomDropdown } from "../components/CustomDropdown";
 
 function Feedbacks() {
     const { t } = useLanguage();
@@ -260,11 +261,15 @@ function Feedbacks() {
 
                         {/* Pagination */}
                         {selectedDataset && (
-                            <div className="flex items-center justify-between mt-10 pt-6 border-t border-gray-100 dark:border-gray-800">
-                                <span className="text-sm text-gray-500 font-medium">
+                            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-10 pt-6 border-t border-gray-100 dark:border-gray-800 gap-4">
+
+                                {/* TOP on mobile */}
+                                <span className="text-sm text-gray-500 font-medium order-1 lg:order-none">
                                     Displaying {offset + 1} - {Math.min(offset + limit, total)} of {total} results
                                 </span>
-                                <div className="flex gap-3">
+
+                                {/* Controls */}
+                                <div className="flex flex-wrap items-center gap-3 order-2 lg:order-none">
                                     {total > limit && <Button
                                         variant="secondary"
                                         disabled={offset === 0}
@@ -272,41 +277,31 @@ function Feedbacks() {
                                     >
                                         Previous
                                     </Button>}
-                                    {/* keep options to change limit and offset */}
-                                    <select
+                                    <CustomDropdown
+                                        label="Limit"
                                         value={limit}
-                                        onChange={(e) => {
-                                            setLimit(Number(e.target.value))
-                                            setOffset(0)
+                                        upward
+                                        options={[10, 20, 30, 50, 100].map(v => ({
+                                            label: String(v),
+                                            value: v,
+                                        }))}
+                                        onChange={(val) => {
+                                            setLimit(val);
+                                            setOffset(0);
                                         }}
-                                        className="p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                    >
-                                        <option value={10}>10</option>
-                                        <option value={20}>20</option>
-                                        <option value={30}>30</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                    </select>
-                                    {total > limit && <select
-                                        value={offset / limit}
-                                        onChange={(e) =>
-                                            // offset will be by counting page number. this is generally page number input on change will set offset
-                                            setOffset(Number(e.target.value) * limit)
-                                        }
-                                        className="p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                    >
-                                        {/* <option value={0}>0</option>
-                                        <option value={1}>1</option>
-                                        <option value={2}>2</option>
-                                        <option value={3}>3</option>
-                                        <option value={4}>4</option>
-                                        <option value={5}>5</option> */}
-                                        {/* make it dynamic */}
-                                        {Array.from({ length: Math.ceil(total / limit) }, (_, i) => (
-                                            <option key={i} value={i}>{i + 1}</option>
-                                        ))}
-                                    </select>
-                                    }
+                                    />
+                                    {total > limit && (
+                                        <CustomDropdown
+                                            label="Page"
+                                            value={offset / limit}
+                                            upward
+                                            options={Array.from({ length: Math.ceil(total / limit) }, (_, i) => ({
+                                                label: String(i + 1),
+                                                value: i,
+                                            }))}
+                                            onChange={(page) => setOffset(page * limit)}
+                                        />
+                                    )}
                                     {total > limit && <Button
                                         variant="secondary"
                                         disabled={offset + limit >= total}
